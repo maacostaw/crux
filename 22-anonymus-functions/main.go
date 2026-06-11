@@ -3,15 +3,16 @@ package main
 import "fmt"
 
 func main() {
-	// An anonymus function is a function with no name
+	// una función anonima es una función sin nombre
 	res := func(n int) int {
 		return n * 2
 	}
 
 	fmt.Println(res(3))
 
-	// Also we can IIFE, inmediate invoked function expression
-	// es como hacer un mini procedure porque queda de un solo uso
+	// También podemos IIFE, inmediate invoked function expression
+	// es como hacer un mini procedimiento porque queda de un solo uso
+	// esto tiene más usos con defers por ejemplo (ver lección 24)
 	res1 := func(a int, b int) int {
 		return a + b
 	}(5, 10)
