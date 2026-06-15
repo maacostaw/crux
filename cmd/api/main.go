@@ -19,7 +19,7 @@ func main() {
 	}
 
 	// Conectamos la config a la db
-	client, _, err := db.Connect(config)
+	client, database, err := db.Connect(config)
 	if err != nil {
 		log.Fatalf("db error")
 	}
@@ -32,7 +32,7 @@ func main() {
 	}()
 
 	// Creamos el router
-	router := server.NewRouter()
+	router := server.NewRouter(database)
 
 	address := fmt.Sprintf(":%s", config.ServerPort)
 
