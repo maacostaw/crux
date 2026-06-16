@@ -20,6 +20,8 @@ type Note struct {
 	UpdatedAt time.Time `bson:"updatedAt" json:"updatedAt"`
 }
 
+// Si pusieramos binding en "pinned" no podríamos poner false, porque tomaría
+// false como si no hubiesemos pasado el valor
 type CreateNoteRequest struct {
 	// Vamos a usar binding
 	Title string `json:"title" binding:"required"`

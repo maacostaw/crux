@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
@@ -33,4 +34,28 @@ func (nr *NotesRepo) Create(ctx context.Context, note Note) (Note, error) {
 	}
 
 	return note, nil
+}
+
+func (r *NotesRepo) List(ctx context.Context) ([]Note, error) {
+	opCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	filter := bson.M{} // Filtro para hacer match con todo
+
+	// Vamos a obtener un cursor (algo así como un iterador) -> sobre los elementos que hacen match
+	cursor, err := r.coll.Find(opCtx, filter)
+	if err != nil {
+		return nil, fmt.Errorf("find notes failed %w", err)
+	}
+
+	// el cursor debe ser cerrado luego de su uso
+	defer cursor.Close(opCtx)
+
+	var notes []Note
+
+	if err := cursor.All(opCtx, &notes); err != nil {
+		return nil, fmt.Errorf("Decode notes failed: %w", err)
+	}
+
+	return notes, nil
 }
