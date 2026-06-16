@@ -77,3 +77,44 @@ func (r *NotesRepo) GetById(ctx context.Context, id bson.ObjectID) (Note, error)
 
 	return note, nil
 }
+
+func (r *NotesRepo) UpdateById(ctx context.Context, id bson.ObjectID, req UpdateNoteRequest) (Note, error) {
+	opCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	filter := bson.M{"_id": id}
+
+	update := bson.M{
+		"$set": bson.M{
+			"title":     req.Title,
+			"content":   req.Content,
+			"pinned":    req.Pinned,
+			"updatedAt": time.Now().UTC(),
+		},
+	}
+
+	opts := options.FindOneAndUpdate().SetReturnDocument(options.After)
+	var updated Note
+	err := r.coll.FindOneAndUpdate(opCtx, filter, update, opts).Decode(&updated)
+	if err != nil {
+		return Note{}, fmt.Errorf("Update note failed: %w", err)
+	}
+
+	return updated, nil
+}
+
+func (r *NotesRepo) DeleteById(ctx context.Context, id bson.ObjectID) (Note, error) {
+	opCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	filter := bson.M{"_id": id}
+
+	opts := options.FindOneAndDelete()
+	var deleted Note
+	err := r.coll.FindOneAndDelete(opCtx, filter, opts).Decode(&deleted)
+	if err != nil {
+		return Note{}, fmt.Errorf("Failed to delete the given note: %w", err)
+	}
+
+	return deleted, nil
+}
