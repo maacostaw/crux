@@ -7,6 +7,7 @@ import (
 
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
+	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
 // Repository -> capa de acceso a datos
@@ -58,4 +59,21 @@ func (r *NotesRepo) List(ctx context.Context) ([]Note, error) {
 	}
 
 	return notes, nil
+}
+
+func (r *NotesRepo) GetById(ctx context.Context, id bson.ObjectID) (Note, error) {
+	opCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	filter := bson.M{"_id": id}
+
+	var note Note
+
+	err := r.coll.FindOne(opCtx, filter, options.FindOne()).Decode(&note)
+
+	if err != nil {
+		return Note{}, fmt.Errorf("Find note by id failed: %w", err)
+	}
+
+	return note, nil
 }
