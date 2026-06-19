@@ -1,6 +1,7 @@
 package notes
 
 import (
+	"context"
 	"errors"
 	"net/http"
 	"time"
@@ -11,10 +12,18 @@ import (
 )
 
 type Handler struct {
-	repo *NotesRepo
+	repo NoteRepository
 }
 
-func NewHandler(repo *NotesRepo) *Handler {
+type NoteRepository interface {
+	Create(ctx context.Context, note Note) (Note, error)
+	List(ctx context.Context) ([]Note, error)
+	GetById(ctx context.Context, id bson.ObjectID) (Note, error)
+	UpdateById(ctx context.Context, id bson.ObjectID, req UpdateNoteRequest) (Note, error)
+	DeleteById(ctx context.Context, id bson.ObjectID) (Note, error)
+}
+
+func NewHandler(repo NoteRepository) *Handler {
 	return &Handler{repo: repo}
 }
 
