@@ -1,0 +1,6 @@
+/mnt/c/WorkPlace/Estudio/crux/JavaService/src/main/java/com/example/javaservice/JavaServiceApplication.java
+/mnt/c/WorkPlace/Estudio/crux/JavaService/src/main/java/com/example/javaservice/config/WebConfig.java
+/mnt/c/WorkPlace/Estudio/crux/JavaService/src/main/java/com/example/javaservice/controller/EstudianteController.java
+/mnt/c/WorkPlace/Estudio/crux/JavaService/src/main/java/com/example/javaservice/model/Estudiante.java
+/mnt/c/WorkPlace/Estudio/crux/JavaService/src/main/java/com/example/javaservice/repository/EstudianteRepository.java
+/mnt/c/WorkPlace/Estudio/crux/JavaService/src/main/java/com/example/javaservice/service/EstudianteService.java
