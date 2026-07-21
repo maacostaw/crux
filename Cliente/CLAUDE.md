@@ -1,57 +1,37 @@
-# Frontend — Cliente (Next.js)
+# Frontend — Cliente (contrato)
 
-Interfaz del CRUD de estudiantes. **Next.js** (App Router), **TypeScript**,
-**Tailwind**. Consume la API de `JavaService`. Parte del monorepo; ver el
-[`CLAUDE.md` raiz](../CLAUDE.md) para las generalidades y para levantar todo el
-stack junto con Docker Compose.
+Contrato/referencia del cliente. Para **comandos y como correr** ver
+[`README.md`](README.md). Generalidades del proyecto en el
+[`CLAUDE.md` raiz](../CLAUDE.md).
 
-La pagina principal permite **ver, crear, editar y eliminar** estudiantes.
-El cliente queda disponible en `http://localhost:3000`.
-
----
-
-## Ejecutar localmente (sin Docker)
-
-Requisitos: **Node.js** y **npm**. Estos comandos son **independientes de
-Docker**: levantan el dev server de Next con hot-reload.
-
-```bash
-npm install      # solo la primera vez
-npm run dev
-```
-
-Scripts disponibles (`package.json`):
-
-- `npm run dev` — servidor de desarrollo con hot-reload.
-- `npm run build` — build de produccion (salida `standalone`).
-- `npm run start` — sirve el build de produccion.
-- `npm run lint` — linter.
-
-### Configuracion de la API
-
-La URL de la API se define en `.env.local`:
-
-```
-NEXT_PUBLIC_API_URL=http://localhost:8080
-```
-
-> Next.js incrusta las variables `NEXT_PUBLIC_*` en el bundle **en build time**.
-> Si cambias esta URL, hay que reconstruir/reiniciar para que surta efecto.
+Stack: **Next.js** (App Router), **TypeScript**, **Tailwind**. Base URL:
+`http://localhost:3000`.
 
 ---
 
-## Ejecutar con Docker
+## Funcionalidad
 
-El cliente tiene su propio `Dockerfile` (build multi-stage con la salida
-`standalone` de Next.js, imagen final minima sobre `node:20-alpine`). Lo normal
-es levantarlo junto con la API y Postgres via Compose (ver `CLAUDE.md` raiz),
-pero tambien se puede construir suelto:
+La pagina principal es un CRUD de estudiantes: permite **ver, crear, editar y
+eliminar**. Todas las operaciones se hacen contra la API de `JavaService`
+(recurso `/api/estudiantes`).
 
-```bash
-docker build -t cliente --build-arg NEXT_PUBLIC_API_URL=http://localhost:8080 .
-docker run -p 3000:3000 cliente
-```
+---
 
-> `NEXT_PUBLIC_API_URL` se pasa como **build arg** (no como variable de runtime)
-> porque Next.js la incrusta en el bundle al compilar. Cambiarla implica
-> reconstruir la imagen.
+## Consumo de la API
+
+- La URL base de la API se resuelve con **`NEXT_PUBLIC_API_URL`**.
+- Contrato de los endpoints y la entidad `Estudiante`: ver
+  [`JavaService/CLAUDE.md`](../JavaService/CLAUDE.md).
+
+### `NEXT_PUBLIC_API_URL` — comportamiento build-time
+
+- Es una variable `NEXT_PUBLIC_*`: Next.js la **incrusta en el bundle en build
+  time**, no se lee en runtime. Cambiarla exige **reconstruir/reiniciar**.
+- En ejecucion local se define en `.env.local`:
+
+  ```
+  NEXT_PUBLIC_API_URL=http://localhost:8080
+  ```
+
+- En Docker se pasa como **build arg** con el mismo nombre (ver `README.md` y el
+  `Dockerfile`), porque debe estar presente durante `npm run build`.
