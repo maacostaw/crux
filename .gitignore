@@ -1,0 +1,4 @@
+# Secretos / configuracion local por entorno
+.env
+.env.*
+!.env.example

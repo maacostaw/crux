@@ -1,0 +1,49 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: crux
+      POSTGRES_USER: crux_user
+      POSTGRES_PASSWORD: D97>XHg0RG_S
+    ports:
+      # 5433 en el host para no chocar con un Postgres local en 5432.
+      # Internamente el contenedor sigue escuchando en 5432 (javaservice se
+      # conecta por la red interna a postgres:5432).
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U crux_user -d crux"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  javaservice:
+    build:
+      context: ./JavaService
+      dockerfile: Dockerfile
+    environment:
+      # Spring Boot mapea estas variables sobre spring.datasource.* (relaxed binding).
+      # El host es "postgres" (nombre del servicio), no localhost.
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/crux
+      SPRING_DATASOURCE_USERNAME: crux_user
+      SPRING_DATASOURCE_PASSWORD: D97>XHg0RG_S
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  cliente:
+    build:
+      context: ./Cliente
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8080
+    ports:
+      - "3000:3000"
+    depends_on:
+      - javaservice
+
+volumes:
+  postgres_data:
