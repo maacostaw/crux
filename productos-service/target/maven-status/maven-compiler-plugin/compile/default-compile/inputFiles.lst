@@ -1,0 +1,12 @@
+/mnt/c/WorkPlace/Estudio/EstudioSpring/microservices-exercise/products-service/src/main/java/com/micro/productos/infrastructure/rest/ProductController.java
+/mnt/c/WorkPlace/Estudio/EstudioSpring/microservices-exercise/products-service/src/main/java/com/micro/productos/infrastructure/persistence/repositories/ProductoJpaRepository.java
+/mnt/c/WorkPlace/Estudio/EstudioSpring/microservices-exercise/products-service/src/main/java/com/micro/productos/application/services/ProductoService.java
+/mnt/c/WorkPlace/Estudio/EstudioSpring/microservices-exercise/products-service/src/main/java/com/micro/productos/domain/exceptions/RecursoNoEncontradoException.java
+/mnt/c/WorkPlace/Estudio/EstudioSpring/microservices-exercise/products-service/src/main/java/com/micro/productos/application/dtos/ProductoRequest.java
+/mnt/c/WorkPlace/Estudio/EstudioSpring/microservices-exercise/products-service/src/main/java/com/micro/productos/infrastructure/persistence/entities/ProductoEntity.java
+/mnt/c/WorkPlace/Estudio/EstudioSpring/microservices-exercise/products-service/src/main/java/com/micro/productos/dto/ReduceStockRequest.java
+/mnt/c/WorkPlace/Estudio/EstudioSpring/microservices-exercise/products-service/src/main/java/com/micro/productos/infrastructure/persistence/adapters/ProductoRepositoryAdapter.java
+/mnt/c/WorkPlace/Estudio/EstudioSpring/microservices-exercise/products-service/src/main/java/com/micro/productos/domain/ports/ProductoRepositoryPort.java
+/mnt/c/WorkPlace/Estudio/EstudioSpring/microservices-exercise/products-service/src/main/java/com/micro/productos/domain/objects/Producto.java
+/mnt/c/WorkPlace/Estudio/EstudioSpring/microservices-exercise/products-service/src/main/java/com/micro/productos/App.java
+/mnt/c/WorkPlace/Estudio/EstudioSpring/microservices-exercise/products-service/src/main/java/com/micro/productos/application/dtos/ProductoResponse.java

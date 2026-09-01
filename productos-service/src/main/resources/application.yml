@@ -1,0 +1,21 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: products-service
+  datasource:
+    # H2 en memoria: cada microservicio tiene SU PROPIA base de datos.
+    # orders-service NO puede tocar esta base directamente, solo vía HTTP.
+    url: jdbc:h2:mem:productsdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console

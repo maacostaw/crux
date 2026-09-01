@@ -1,0 +1,25 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: orders-service
+  datasource:
+    # Base de datos PROPIA de orders-service, separada por completo de products-service.
+    url: jdbc:h2:mem:ordersdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+# URL donde vive products-service. Aqui es donde orders-service "sabe" del otro servicio.
+products:
+  service:
+    url: http://localhost:8081
