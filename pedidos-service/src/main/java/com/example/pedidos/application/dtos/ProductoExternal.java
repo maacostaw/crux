@@ -2,6 +2,7 @@ package com.example.pedidos.application.dtos;
 
 import java.math.BigDecimal;
 
+// Clase que representa un producto del servicio de productos
 public class ProductoExternal {
     private Long id;
     private String nombre;

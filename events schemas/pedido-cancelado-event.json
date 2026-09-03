@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PedidoCanceladoEvent",
+  "description": "Evento publicado por pedidos-service cuando se cancela un pedido. Consumido por productos-service para devolver el stock reservado.",
+  "type": "object",
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Identificador único del evento, generado por el publicador. Usado para idempotencia del lado del consumidor."
+    },
+    "orderId": {
+      "type": "integer",
+      "description": "Id del pedido que fue cancelado."
+    },
+    "productId": {
+      "type": "integer",
+      "description": "Id del producto cuyo stock debe devolverse."
+    },
+    "quantity": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Cantidad de stock a devolver."
+    }
+  },
+  "required": ["eventId", "orderId", "productId", "quantity"]
+}
