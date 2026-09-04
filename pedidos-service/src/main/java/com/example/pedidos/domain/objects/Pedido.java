@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public class Pedido {
     private Long id;
-    private Long idProducto;
+    private Long productoId;
     private String nombre;
     private BigDecimal precioUnitario;
     private Integer cantidad;
@@ -18,9 +18,9 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(Long id, Long idProducto, String nombre, BigDecimal precioUnitario, Integer cantidad, PedidoStatus status, LocalDateTime createdAt) {
+    public Pedido(Long id, Long productoId, String nombre, BigDecimal precioUnitario, Integer cantidad, PedidoStatus status, LocalDateTime createdAt) {
         this.id = id;
-        this.idProducto = idProducto;
+        this.productoId = productoId;
         this.nombre = nombre;
         this.precioUnitario = precioUnitario;
         this.cantidad = cantidad;
@@ -76,11 +76,11 @@ public class Pedido {
         this.nombre = nombre;
     }
 
-    public Long getIdProducto() {
-        return idProducto;
+    public Long getProductoId() {
+        return productoId;
     }
 
-    public void setIdProducto(Long idProducto) {
-        this.idProducto = idProducto;
+    public void setProductoId(Long productoId) {
+        this.productoId = productoId;
     }
 }

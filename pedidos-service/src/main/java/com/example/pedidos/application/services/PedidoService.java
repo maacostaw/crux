@@ -5,6 +5,7 @@ import com.example.pedidos.domain.enums.PedidoStatus;
 import com.example.pedidos.domain.exceptions.CancelarPedido2VecesException;
 import com.example.pedidos.domain.exceptions.PedidoNoEncontradoException;
 import com.example.pedidos.domain.objects.Pedido;
+import com.example.pedidos.domain.ports.PedidoEventPort;
 import com.example.pedidos.domain.ports.PedidoRepositoryPort;
 import com.example.pedidos.domain.ports.ProductoRepositoryPort;
 import com.example.pedidos.application.dtos.PedidoRequest;
@@ -27,11 +28,15 @@ public class PedidoService implements PedidoUseCase {
     private final ProductoRepositoryPort productoRepositoryPort;
     private final ModelMapper modelMapper;
 
+    private final PedidoEventPort pedidoEventPort;
+
     public PedidoService(PedidoRepositoryPort pedidoRepositoryPort,
+                         PedidoEventPort pedidoEventPort,
                          ProductoRepositoryPort productoRepositoryPort,
                          ModelMapper modelMapper
     ) {
         this.productoRepositoryPort = productoRepositoryPort;
+        this.pedidoEventPort = pedidoEventPort;
         this.pedidoRepositoryPort = pedidoRepositoryPort;
         this.modelMapper = modelMapper;
     }
@@ -57,7 +62,7 @@ public class PedidoService implements PedidoUseCase {
 
         Pedido pedido = new Pedido();
         pedido.setId(null);
-        pedido.setIdProducto(producto.getId());
+        pedido.setProductoId(producto.getId());
         pedido.setNombre(producto.getNombre());
         pedido.setPrecioUnitario(producto.getPrecio());
         pedido.setCantidad(request.getCantidad());
@@ -79,9 +84,10 @@ public class PedidoService implements PedidoUseCase {
             throw new CancelarPedido2VecesException(pedido.getId());
         }
 
-        this.productoRepositoryPort.augmentStock(id, pedido.getCantidad());
-        pedido.setStatus(PedidoStatus.CANCELLED);
+        pedido.setStatus(PedidoStatus.PENDING_CANCELLATION);
         Pedido savedPedido = this.pedidoRepositoryPort.save(pedido);
+
+        this.pedidoEventPort.publicarPedidoCancelado(pedido.getId(), pedido.getProductoId(), pedido.getCantidad());
 
         return this.modelMapper.map(savedPedido, PedidoResponse.class);
     }
