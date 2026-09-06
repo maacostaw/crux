@@ -1,0 +1,10 @@
+# Secretos - nunca deben subirse
+.env
+**/.env
+kafka-jaas.conf
+
+# IDE
+.idea/
+
+# Maven
+target/

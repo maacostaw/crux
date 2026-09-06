@@ -9,17 +9,37 @@ Solo se necesita **Java 17+** y **Maven**
 
 ## 1. Cómo ejecutar
 
-En dos terminales distintas:
+1) Para correr kafka y su UI
+
+```bash
+docker compose up -d
+```
+
+2) Dale permisos de ejecución al script (solo la primera vez):
+
+```bash
+chmod +x kafka-setup.sh
+```
+
+3) Crea el topic `pedido-cancelado` (si no existe) y las 3 ACLs necesarias
+
+```bash
+./kafka-setup.sh
+```
+
+Esto 
+
+4) Luego ya podemos correr los servicios en dos terminales distintas:
 
 ```bash
 # Terminal 1
-cd products-service
+cd productos-service
 mvn spring-boot:run
 ```
 
 ```bash
 # Terminal 2
-cd orders-service
+cd pedidos-service
 mvn spring-boot:run
 ```
 
@@ -27,7 +47,7 @@ Prueba que funciona (con curl o Postman):
 
 ```bash
 # Ver productos
-curl http://localhost:8081/products
+curl http://localhost:8081/productos
 
 # Crear un pedido
 curl -X POST http://localhost:8082/api/pedidos \
@@ -40,8 +60,8 @@ curl -X GET http://localhost:8082/api/pedidos/{id}/cancelar-pedido \
   -d '{"productId": 1, "quantity": 2}'
 ```
 
-Si el pedido se creó bien, el stock del producto en `products-service` debe haber bajado.
+Si el pedido se creó bien, el stock del producto en `productos-service` debe haber bajado.
 
-Si el pedido se canceló correctamente el stock del producto en `products-service` debe haber sido restaurado.
+Si el pedido se canceló correctamente el stock del producto en `productos-service` debe haber sido restaurado.
 
 No se puede cancelar un pedido 2 veces.
