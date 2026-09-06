@@ -28,3 +28,6 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "*"
+        security.protocol: SASL_PLAINTEXT
+        sasl.mechanism: PLAIN
+        sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${KAFKA_PRODUCTOS_USERNAME}" password="${KAFKA_PRODUCTOS_PASSWORD}";

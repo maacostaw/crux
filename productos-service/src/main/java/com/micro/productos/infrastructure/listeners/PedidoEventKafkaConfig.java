@@ -19,6 +19,12 @@ public class PedidoEventKafkaConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
+    @Value("${KAFKA_PRODUCTOS_USERNAME}")
+    private String username;
+
+    @Value("${KAFKA_PRODUCTOS_PASSWORD}")
+    private String password;
+
     public ConsumerFactory<String, PedidoCanceladoEvent> pedidoCanceladoConsumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
@@ -28,6 +34,9 @@ public class PedidoEventKafkaConfig {
         props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, PedidoCanceladoEvent.class);
         props.put(JsonDeserializer.USE_TYPE_INFO_HEADERS, false);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        props.put("security.protocol", "SASL_PLAINTEXT");
+        props.put("sasl.mechanism", "PLAIN");
+        props.put("sasl.jaas.config", "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"" + username + "\" password=\"" + password + "\";");
 
         return new DefaultKafkaConsumerFactory<>(props);
     }
