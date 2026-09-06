@@ -2,7 +2,7 @@ package com.example.pedidos.application.services;
 
 import com.example.pedidos.application.dtos.PedidoResponse;
 import com.example.pedidos.domain.enums.PedidoStatus;
-import com.example.pedidos.domain.exceptions.CancelarPedido2VecesException;
+import com.example.pedidos.domain.exceptions.CancelarPedido;
 import com.example.pedidos.domain.exceptions.PedidoNoEncontradoException;
 import com.example.pedidos.domain.objects.Pedido;
 import com.example.pedidos.domain.ports.PedidoEventPort;
@@ -76,19 +76,25 @@ public class PedidoService implements PedidoUseCase {
         return this.modelMapper.map(pedidoGuardado, PedidoResponse.class);
     }
 
+    // Reglas para cancelar un pedido:
+    // 1) El pedido debe existir
+    // 2) El pedido debe estar en status creado
+    // Esta pendiente hacer
     public PedidoResponse cancelarPedido(Long id){
+        // 1) Regla #1
         Pedido pedido = this.pedidoRepositoryPort.findById(id)
                 .orElseThrow(() -> new PedidoNoEncontradoException(id));
 
-        if(pedido.getStatus().equals(PedidoStatus.CANCELLED)){
-            throw new CancelarPedido2VecesException(pedido.getId());
+        // 2) Regla #2
+        if(pedido.getStatus().equals(PedidoStatus.CREATED)){
+            pedido.setStatus(PedidoStatus.PENDING_CANCELLATION);
+            Pedido savedPedido = this.pedidoRepositoryPort.save(pedido);
+
+            this.pedidoEventPort.publicarPedidoCancelado(pedido.getId(), pedido.getProductoId(), pedido.getCantidad());
+
+            return this.modelMapper.map(savedPedido, PedidoResponse.class);
+        } else {
+            throw new CancelarPedido(pedido.getId(), pedido.getStatus());
         }
-
-        pedido.setStatus(PedidoStatus.PENDING_CANCELLATION);
-        Pedido savedPedido = this.pedidoRepositoryPort.save(pedido);
-
-        this.pedidoEventPort.publicarPedidoCancelado(pedido.getId(), pedido.getProductoId(), pedido.getCantidad());
-
-        return this.modelMapper.map(savedPedido, PedidoResponse.class);
     }
 }

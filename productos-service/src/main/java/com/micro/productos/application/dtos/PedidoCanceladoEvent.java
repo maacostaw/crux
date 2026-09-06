@@ -4,19 +4,19 @@ import java.util.UUID;
 
 public class PedidoCanceladoEvent {
     private String eventId;
-    private Long orderId;
-    private Long productId;
-    private Integer quantity;
+    private Long pedidoId;
+    private Long productoId;
+    private Integer cantidad;
 
     public PedidoCanceladoEvent() {
 
     }
 
-    public PedidoCanceladoEvent(Long orderId, Long productId, Integer quantity) {
+    public PedidoCanceladoEvent(Long pedidoId, Long productoId, Integer cantidad) {
         this.eventId = UUID.randomUUID().toString();
-        this.orderId = orderId;
-        this.productId = productId;
-        this.quantity = quantity;
+        this.pedidoId = pedidoId;
+        this.productoId = productoId;
+        this.cantidad = cantidad;
     }
 
     public String getEventId() {
@@ -27,27 +27,27 @@ public class PedidoCanceladoEvent {
         this.eventId = eventId;
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public Long getPedidoId() {
+        return pedidoId;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
+    public void setPedidoId(Long pedidoId) {
+        this.pedidoId = pedidoId;
     }
 
-    public Long getProductId() {
-        return productId;
+    public Long getProductoId() {
+        return productoId;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProductoId(Long productoId) {
+        this.productoId = productoId;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getCantidad() {
+        return cantidad;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 }

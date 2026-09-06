@@ -4,7 +4,7 @@ import com.micro.productos.application.dtos.ProductoRequest;
 import com.micro.productos.application.dtos.ProductoResponse;
 import com.micro.productos.application.dtos.UpdateStockRequest;
 import com.micro.productos.domain.useCases.ProductoUseCase;
-import com.micro.productos.domain.useCases.UpdateStockUseCase;
+import com.micro.productos.domain.useCases.ActualizarInventarioUseCase;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +18,11 @@ public class ProductoController {
 
     private final ProductoUseCase productoUseCase;
 
-    private final UpdateStockUseCase updateStockUseCase;
+    private final ActualizarInventarioUseCase actualizarInventarioUseCase;
 
-    public ProductoController(ProductoUseCase productoUseCase, UpdateStockUseCase updateStockUseCase) {
+    public ProductoController(ProductoUseCase productoUseCase, ActualizarInventarioUseCase actualizarInventarioUseCase) {
         this.productoUseCase = productoUseCase;
-        this.updateStockUseCase = updateStockUseCase;
+        this.actualizarInventarioUseCase = actualizarInventarioUseCase;
     }
 
     @GetMapping
@@ -47,13 +47,13 @@ public class ProductoController {
     // orders-service llama aquí para descontar stock cuando se crea un pedido.
     @PostMapping("/{id}/reduce-stock")
     public ResponseEntity<ProductoResponse> reduceStock(@PathVariable Long id, @RequestBody UpdateStockRequest request) {
-        ProductoResponse producto = this.updateStockUseCase.reduceStock(id, request);
+        ProductoResponse producto = this.actualizarInventarioUseCase.reducirInventario(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(producto);
     }
 
-    @PostMapping("/{id}/augment-stock")
-    public ResponseEntity<Void> augmentStock(@PathVariable Long id, @RequestBody UpdateStockRequest request) {
-        this.updateStockUseCase.augmentStock(id, request);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
+//    @PostMapping("/{id}/augment-stock")
+//    public ResponseEntity<Void> augmentStock(@PathVariable Long id, @RequestBody UpdateStockRequest request) {
+//        this.updateStockUseCase.augmentStock(id, request);
+//        return ResponseEntity.status(HttpStatus.OK).build();
+//    }
 }

@@ -59,8 +59,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status).body(response);
     }
 
-    @ExceptionHandler(CancelarPedido2VecesException.class)
-    public ResponseEntity<Map<String, Object>> CancelarPedido2VecesHandler(CancelarPedido2VecesException e) {
+    @ExceptionHandler(CancelarPedido.class)
+    public ResponseEntity<Map<String, Object>> CancelarPedidoHandler(CancelarPedido e) {
         Map<String, Object> response = new HashMap<>();
         HttpStatus status = HttpStatus.CONFLICT;
         response.put("Timestamp", LocalDateTime.now());
