@@ -2,17 +2,17 @@ package com.micro.productos.application.dtos;
 
 import java.util.UUID;
 
-public class PedidoCanceladoEvent {
+public class PedidoEvent {
     private String eventId;
     private Long pedidoId;
     private Long productoId;
     private Integer cantidad;
 
-    public PedidoCanceladoEvent() {
+    public PedidoEvent() {
 
     }
 
-    public PedidoCanceladoEvent(Long pedidoId, Long productoId, Integer cantidad) {
+    public PedidoEvent(Long pedidoId, Long productoId, Integer cantidad) {
         this.eventId = UUID.randomUUID().toString();
         this.pedidoId = pedidoId;
         this.productoId = productoId;

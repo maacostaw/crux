@@ -1,6 +1,6 @@
 package com.micro.productos.infrastructure.listeners;
 
-import com.micro.productos.application.dtos.PedidoCanceladoEvent;
+import com.micro.productos.application.dtos.PedidoEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,13 +25,13 @@ public class PedidoEventKafkaConfig {
     @Value("${KAFKA_PRODUCTOS_PASSWORD}")
     private String password;
 
-    public ConsumerFactory<String, PedidoCanceladoEvent> pedidoCanceladoConsumerFactory() {
+    public ConsumerFactory<String, PedidoEvent> pedidoCanceladoConsumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "productos-service-group");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, PedidoCanceladoEvent.class);
+        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, PedidoEvent.class);
         props.put(JsonDeserializer.USE_TYPE_INFO_HEADERS, false);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put("security.protocol", "SASL_PLAINTEXT");
@@ -42,8 +42,8 @@ public class PedidoEventKafkaConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, PedidoCanceladoEvent> pedidoCanceladoListenerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, PedidoCanceladoEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, PedidoEvent> pedidoCanceladoListenerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, PedidoEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(pedidoCanceladoConsumerFactory());
         return factory;
     }
