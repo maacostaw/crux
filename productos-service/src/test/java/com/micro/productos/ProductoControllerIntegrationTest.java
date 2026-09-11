@@ -1,8 +1,7 @@
 package com.micro.productos;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.micro.productos.application.dtos.ProductoRequest;
-import com.micro.productos.infrastructure.rest.ProductoController;
+import com.micro.productos.application.dtos.Requests.ProductoRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

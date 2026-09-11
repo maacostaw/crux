@@ -1,8 +1,8 @@
 package com.micro.productos.infrastructure.rest;
 
-import com.micro.productos.application.dtos.ProductoRequest;
-import com.micro.productos.application.dtos.ProductoResponse;
-import com.micro.productos.application.dtos.UpdateStockRequest;
+import com.micro.productos.application.dtos.Requests.ProductoRequest;
+import com.micro.productos.application.dtos.Responses.ProductoResponse;
+import com.micro.productos.application.dtos.Requests.UpdateStockRequest;
 import com.micro.productos.domain.useCases.ProductoUseCase;
 import com.micro.productos.domain.useCases.ActualizarInventarioUseCase;
 import jakarta.validation.Valid;

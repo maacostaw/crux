@@ -1,22 +1,21 @@
-package com.micro.productos.application.dtos;
+package com.micro.productos.application.dtos.Events;
 
 import java.util.UUID;
 
-public class PedidoEvent {
+public class StockDevueltoEvent {
     private String eventId;
     private Long pedidoId;
     private Long productoId;
-    private Integer cantidad;
+    private Boolean success;
 
-    public PedidoEvent() {
-
+    public StockDevueltoEvent() {
     }
 
-    public PedidoEvent(Long pedidoId, Long productoId, Integer cantidad) {
+    public StockDevueltoEvent(Long pedidoId, Long productoId, Boolean success) {
         this.eventId = UUID.randomUUID().toString();
         this.pedidoId = pedidoId;
         this.productoId = productoId;
-        this.cantidad = cantidad;
+        this.success = success;
     }
 
     public String getEventId() {
@@ -43,11 +42,11 @@ public class PedidoEvent {
         this.productoId = productoId;
     }
 
-    public Integer getCantidad() {
-        return cantidad;
+    public Boolean getSuccess() {
+        return success;
     }
 
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
+    public void setSuccess(Boolean success) {
+        this.success = success;
     }
 }

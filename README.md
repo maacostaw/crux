@@ -27,8 +27,6 @@ chmod +x kafka-setup.sh
 ./kafka-setup.sh
 ```
 
-Esto 
-
 4) Luego ya podemos correr los servicios en dos terminales distintas:
 
 ```bash

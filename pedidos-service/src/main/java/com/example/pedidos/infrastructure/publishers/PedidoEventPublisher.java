@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PedidoEventPublisher implements PedidoEventPort {
-    private static final String TOPIC = "pedido-cancelado";
+    private static final String TOPIC = "pedidos.pedido-cancelado";
 
     private final KafkaTemplate<String, PedidoCanceladoEvent> kafkaTemplate;
 

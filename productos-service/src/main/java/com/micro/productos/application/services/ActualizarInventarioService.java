@@ -1,8 +1,8 @@
 package com.micro.productos.application.services;
 
-import com.micro.productos.application.dtos.PedidoEvent;
-import com.micro.productos.application.dtos.ProductoResponse;
-import com.micro.productos.application.dtos.UpdateStockRequest;
+import com.micro.productos.application.dtos.Events.PedidoCanceladoEvent;
+import com.micro.productos.application.dtos.Responses.ProductoResponse;
+import com.micro.productos.application.dtos.Requests.UpdateStockRequest;
 import com.micro.productos.domain.exceptions.RecursoNoEncontradoException;
 import com.micro.productos.domain.exceptions.StockInsuficienteException;
 import com.micro.productos.domain.objects.EventoProcesado;
@@ -52,7 +52,7 @@ public class ActualizarInventarioService implements ActualizarInventarioUseCase 
     }
 
     @Override
-    public void aumentarInventario(PedidoEvent evento){
+    public void aumentarInventario(PedidoCanceladoEvent evento){
         log.info("Evento recibido: pedido cancelado, eventId={}, pedidoId={}", evento.getEventId(), evento.getPedidoId());
 
         // Garantizamos idempotencia

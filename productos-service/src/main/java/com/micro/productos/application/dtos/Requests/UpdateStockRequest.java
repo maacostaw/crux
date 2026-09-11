@@ -1,4 +1,4 @@
-package com.micro.productos.application.dtos;
+package com.micro.productos.application.dtos.Requests;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

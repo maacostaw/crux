@@ -1,4 +1,4 @@
-package com.micro.productos.application.dtos;
+package com.micro.productos.application.dtos.Responses;
 
 import java.math.BigDecimal;
 

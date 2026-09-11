@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StockDevueltoEvent",
+  "description": "Evento publicado por productos-service cuando se retorna stock a un producto. Consumido por pedidos-service para notificar el resultado de la devolución.",
+  "type": "object",
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Identificador único del evento, generado por el publicador. Usado para idempotencia del lado del consumidor."
+    },
+    "orderId": {
+      "type": "integer",
+      "description": "Id del pedido que fue cancelado."
+    },
+    "productId": {
+      "type": "integer",
+      "description": "Id del producto cuyo stock fue o no devuelto."
+    },
+    "success": {
+      "type": "boolean",
+      "description": "El stock pudo ser devuelto o no"
+    }
+  },
+  "required": ["eventId", "orderId", "productId", "success"]
+}

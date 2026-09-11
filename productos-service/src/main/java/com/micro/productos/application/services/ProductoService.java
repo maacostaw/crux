@@ -1,7 +1,7 @@
 package com.micro.productos.application.services;
 
-import com.micro.productos.application.dtos.ProductoRequest;
-import com.micro.productos.application.dtos.ProductoResponse;
+import com.micro.productos.application.dtos.Requests.ProductoRequest;
+import com.micro.productos.application.dtos.Responses.ProductoResponse;
 import com.micro.productos.domain.exceptions.RecursoNoEncontradoException;
 import com.micro.productos.domain.objects.Producto;
 import com.micro.productos.domain.ports.ProductoRepositoryPort;
